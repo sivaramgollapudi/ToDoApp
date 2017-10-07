@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">To-Do</string>
+    <string name="add_new_todo_item">New</string>
+    <string name="menu_status">Completed</string>
+    <string name="add_to_do_item">Add ToDo Item</string>
+    <string name="to_do_title">Title</string>
+    <string name="to_do_description">Description</string>
+    <string name="save_to_do_item">Save</string>
+    <string name="cancel_to_do_item">Cancel</string>
+</resources>
