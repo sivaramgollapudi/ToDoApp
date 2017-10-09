@@ -64,6 +64,8 @@ public class CompletedItems extends AppCompatActivity{
     private void deleteCompletedItem(int position){
         dbHelper.deleteRecord(Constants.TODO_LIST, "KEY_ID=" + Integer.parseInt(completedToDoListItems.get(position).getId()),null);
         getAllCompletedItems();
+        completedToDoListCustomAdapter  = new ToDoListCustomAdapter(getApplicationContext(), completedToDoListItems);
+        completedToDoListView.setAdapter(completedToDoListCustomAdapter);
         completedToDoListCustomAdapter.notifyDataSetChanged();
     }
 

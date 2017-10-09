@@ -141,8 +141,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (result > 0) {
             getAllToDoListItems();
+            getAllToDoListItems();
+            toDoListCustomAdapter  = new ToDoListCustomAdapter(getApplicationContext(), toDoListItems);
+            toDoListView.setAdapter(toDoListCustomAdapter);
+
+            toDoListCustomAdapter.notifyDataSetChanged(); // Notify Adapter.
         }
-        toDoListCustomAdapter.notifyDataSetChanged();
     }
 
     //Show Alert Dialog To Add New To Do Item.
