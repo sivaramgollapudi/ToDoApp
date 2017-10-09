@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 public class CompletedItems extends AppCompatActivity{
+    // Completed Items Activity.
 
     ListView completedToDoListView;
     ToDoListCustomAdapter completedToDoListCustomAdapter;
@@ -59,12 +60,14 @@ public class CompletedItems extends AppCompatActivity{
         });
     }
 
+    // Delete Spceific Record.
     private void deleteCompletedItem(int position){
         dbHelper.deleteRecord(Constants.TODO_LIST, "KEY_ID=" + Integer.parseInt(completedToDoListItems.get(position).getId()),null);
         getAllCompletedItems();
         completedToDoListCustomAdapter.notifyDataSetChanged();
     }
 
+    // Get COmpleted List Items From Database By Key Status = 1
     private void getAllCompletedItems(){
         Cursor c = dbHelper.getToDoRecords(Constants.TODO_LIST,columnNames,"KEY_STATUS=1","KEY_DATE");
         completedToDoListItems = new ArrayList();
@@ -81,6 +84,7 @@ public class CompletedItems extends AppCompatActivity{
                 String row = title + " " + c.getString(c.getColumnIndex(Constants.DESCRIPTION)) + " " +
                         c.getString(c.getColumnIndex(Constants.ACTIONDATE)) + " " + c.getInt(c.getColumnIndex(Constants.STATUS));
 
+                // Updated to To Do List Class andAdd to Custom Adapter.
 
                 ToDoList todoList = new ToDoList(id, title.toString(), description.toString(), actionDate.toString(), status);
 

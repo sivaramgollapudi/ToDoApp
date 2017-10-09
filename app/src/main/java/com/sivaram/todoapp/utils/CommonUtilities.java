@@ -11,10 +11,9 @@ import com.sivaram.todoapp.database.DBHelper;
 
 public class CommonUtilities {
 
+    // A Singleton Class Creates Object if not created
     public static DBHelper getDBObject(Context context){
         DBHelper dbHelper = DBHelper.getInstance(context);
-        if (dbHelper != null)
-            Toast.makeText(context, "CommonUtilies.getDBObject...", Toast.LENGTH_SHORT).show();
         return dbHelper;
     }
 }

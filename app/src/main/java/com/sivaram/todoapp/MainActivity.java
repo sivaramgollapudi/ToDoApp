@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Inflate Menu Which will Allow to add new Item.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+    //  On Item Selected from Custom Adapter View. Based on the Menu Item. Status WIll be updated.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,11 +100,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    // Show Completed Items Activity via intent.
     private void showCompletedItems(){
         Intent completedItemsIntent = new Intent(MainActivity.this, CompletedItems.class);
         startActivity(completedItemsIntent);
     }
 
+    // Store All ToDoList Items from database to ToDoList Items Colleciton.
     private void getAllToDoListItems(){
         Cursor c = dbHelper.getToDoRecords(Constants.TODO_LIST,columnNames,null,"KEY_DATE");
         toDoListItems = new ArrayList();
@@ -126,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Update To dO Item status
     private void updateToDoItemStatus(int position){
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.STATUS,1);
@@ -138,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         toDoListCustomAdapter.notifyDataSetChanged();
     }
 
+    //Show Alert Dialog To Add New To Do Item.
     private void showAddItemDialog(boolean isItemSelected, int position){
         final ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(this,R.style.Theme_AppCompat_Dialog);
         dialog = new AlertDialog.Builder(contextThemeWrapper).setView(R.layout.add_todo_item).create();
@@ -153,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
         selectedRowID = "";
 
+
+        // Display Data In Alert Dialog Layout. if clicked from Custom Adapter List View Item.
         if (isItemSelected){
             selectedRowID = toDoListItems.get(position).getId();
             titleEditText.setText(toDoListItems.get(position).getTitle());
@@ -163,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
         Button toDoItemSaveButton = (Button)dialog.findViewById(R.id.saveButton);
         Button toDoItemCancelButton = (Button) dialog.findViewById(R.id.cancelButton);
 
+
+        // Create Save Button Listener
         toDoItemSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,18 +187,22 @@ public class MainActivity extends AppCompatActivity {
                 contentValues.put(Constants.ACTIONDATE, selectedDate);
                 contentValues.put(Constants.STATUS, 0);
 
+                // If Selected Row Id has nothing, create new ToDoList Item.
                 if (selectedRowID.equals(""))
                     result_key_id = dbHelper.insertToDoList(Constants.TODO_LIST,contentValues);
-                else
+                else // If not Update Existing Item by Selected ID
                     result_key_id = dbHelper.updateRecord(Constants.TODO_LIST, contentValues, "KEY_ID=" + selectedRowID, null);
 
-                toDoListItems.add(new ToDoList(String.valueOf(result_key_id), titleEditText.getText().toString(),
-                                                descriptionEditText.getText().toString(),
-                                                selectedDate, 1));
-                toDoListCustomAdapter.notifyDataSetChanged();
+                // Toast Successfully Created/Updated
+                Toast.makeText(contextThemeWrapper, (selectedRowID.equals("")) ? "New ToDo Item Created Successfully... " : "ToDo Item Updated Successfully. ", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(contextThemeWrapper, (selectedRowID.equals("")) ? "New ToDo Item Created Successfully... " : "ToDo Item Updateioo ", Toast.LENGTH_SHORT).show();
 
+                getAllToDoListItems();
+                toDoListCustomAdapter  = new ToDoListCustomAdapter(getApplicationContext(), toDoListItems);
+                toDoListView.setAdapter(toDoListCustomAdapter);
+
+                toDoListCustomAdapter.notifyDataSetChanged(); // Notify Adapter.
+                dialog.dismiss();
             }
         });
         

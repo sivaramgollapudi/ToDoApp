@@ -46,6 +46,7 @@ public class ToDoListCustomAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
+        // CUstom Adapter View for Each Row.
         View toDoListCustomView = View.inflate(context, R.layout.todo_listview,null);
 
         TextView idTextView = (TextView) toDoListCustomView.findViewById(R.id.idTextView);
@@ -59,11 +60,15 @@ public class ToDoListCustomAdapter extends BaseAdapter {
         titleTextView.setText(toDoListItems.get(position).getTitle());
         descriptionTextView.setText(toDoListItems.get(position).getDescription());
         dateTextView.setText(toDoListItems.get(position).getActionDate());
+
+        // Change Image Based on Status Column Value.
         if (String.valueOf(toDoListItems.get(position).getStatus()).equals("0"))
             statusImageView.setImageResource(R.drawable.thumbsup);
         else
             statusImageView.setImageResource(R.drawable.done);
 
+
+        // Group Header Date Will be In-Visible if the previous row has same date.
         if (position != 0) {
             if (!toDoListItems.get(position-1).getActionDate().equals(toDoListItems.get(position).getActionDate())) {
                 groupDateTextView.setText(toDoListItems.get(position).getActionDate());
