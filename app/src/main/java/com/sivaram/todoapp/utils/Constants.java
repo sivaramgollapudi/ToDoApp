@@ -8,7 +8,7 @@ public class Constants {
 
     public static final String DATABASE_NAME="todoapp.db";
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
 
     public static final String TODO_LIST ="TODO_LIST"; // Table Name
 

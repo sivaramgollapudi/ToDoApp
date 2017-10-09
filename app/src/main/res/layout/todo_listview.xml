@@ -62,4 +62,14 @@
         android:layout_marginRight="11dp"
         android:padding="2dp"
         app:srcCompat="@drawable/thumbsup" />
+
+    <TextView
+        android:id="@+id/idTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/dateTextView"
+        android:text="TextView"
+        android:visibility="gone" />
 </RelativeLayout>

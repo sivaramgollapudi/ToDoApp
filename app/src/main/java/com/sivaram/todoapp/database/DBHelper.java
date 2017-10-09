@@ -73,10 +73,36 @@ public class DBHelper {
     public Cursor getToDoRecords(String tableName, String[] columns, String where, String orderby){
         Cursor c = db.query(false,tableName, columns, where, null,null,null, orderby, null);
         if (db == null) Toast.makeText(context, "DB IS NULL", Toast.LENGTH_SHORT).show();
-
-        //c =
-        //if (db == null)
-        //    Toast.makeText(context, "DB Helper.getToDoRecords Failed", Toast.LENGTH_SHORT).show();
         return c;
+    }
+
+    public int updateRecord(String tableName,ContentValues contentValues,String where,String[] whereArgs){
+        int rowCount = 0;
+        try{
+            db.beginTransaction();
+            rowCount = db.update(tableName, contentValues, where, whereArgs);
+            db.setTransactionSuccessful();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        finally {
+            db.endTransaction();
+        }
+        return rowCount;
+    }
+
+    public void deleteRecord(String tableName, String where, String[] whereArgs){
+        try{
+            db.beginTransaction();
+            db.delete(tableName,where,whereArgs);
+            db.setTransactionSuccessful();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        finally{
+            db.endTransaction();
+        }
     }
 }

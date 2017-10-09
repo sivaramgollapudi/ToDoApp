@@ -6,16 +6,26 @@ package com.sivaram.todoapp;
 
 public class ToDoList {
 
+    private String id; // Task ID Created by database.
     private String title; // Task Title
     private String description; //  Task Description
     private String actionDate; // Task Date
     private int status; // Task Status
 
-    public ToDoList(String title, String description, String actionDate, int status) {
+    public ToDoList(String id, String title, String description, String actionDate, int status) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.actionDate = actionDate;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
